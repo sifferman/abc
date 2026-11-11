@@ -2115,6 +2115,7 @@ void Pdr_ManResetReuseInvariant( Pdr_Man_t * p )
     Vec_PtrForEachEntry( sat_solver *, p->vSolvers, pSat, i )
         sat_solver_delete( pSat );
     Vec_PtrFree( p->vSolvers );
+    Pdr_ManStopGipSolvers( p );
     Vec_VecFree( p->vClauses );
     Pdr_QueueStop( p );
     Vec_IntFree( p->vActVars );

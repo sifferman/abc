@@ -320,6 +320,28 @@ Pdr_Man_t * Pdr_ManStart( Aig_Man_t * pAig, Pdr_Par_t * pPars, Vec_Int_t * vPrio
 
 /**Function*************************************************************
 
+  Synopsis    [Frees the per-timeframe GipSAT solvers, leaving the vector empty.]
+
+  Description []
+
+  SideEffects []
+
+  SeeAlso     []
+
+***********************************************************************/
+void Pdr_ManStopGipSolvers( Pdr_Man_t * p )
+{
+    Gip_Solver_t * pGip;
+    int i;
+    if ( !p->pPars->fUseGipSat )
+        return;
+    Vec_PtrForEachEntry( Gip_Solver_t *, p->vGipSolvers, pGip, i )
+        Gip_SolverFree( pGip );
+    Vec_PtrClear( p->vGipSolvers );
+}
+
+/**Function*************************************************************
+
   Synopsis    [Frees manager.]
 
   Description []
@@ -356,13 +378,8 @@ void Pdr_ManStop( Pdr_Man_t * p )
     Vec_PtrForEachEntry( sat_solver *, p->vSolvers, pSat, i )
         sat_solver_delete( pSat );
     Vec_PtrFree( p->vSolvers );
-    if ( p->vGipSolvers )
-    {
-        Gip_Solver_t * pGip;
-        Vec_PtrForEachEntry( Gip_Solver_t *, p->vGipSolvers, pGip, i )
-            Gip_SolverFree( pGip );
-        Vec_PtrFree( p->vGipSolvers );
-    }
+    Pdr_ManStopGipSolvers( p );
+    Vec_PtrFreeP( &p->vGipSolvers );
     Gip_CtxFree( p->pGipCtx );
     Vec_IntFreeP( &p->vGipLits );
     Vec_IntFreeP( &p->vGipOrder );

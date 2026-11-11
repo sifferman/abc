@@ -608,6 +608,8 @@ int Pdr_ManDeriveMarkNonInductive( Pdr_Man_t * p, Vec_Ptr_t * vCubes )
 
     Vec_Ptr_t *vLevel;
     sat_solver_delete( (sat_solver *)Vec_PtrPop( p->vSolvers ) );
+    if ( p->pPars->fUseGipSat )
+        Gip_SolverFree( (Gip_Solver_t *)Vec_PtrPop( p->vGipSolvers ) );
     vLevel = (Vec_Ptr_t *)Vec_PtrPop( (Vec_Ptr_t *)p->vClauses );
     assert (Vec_PtrSize( vLevel ) == 0);
     Vec_PtrFree( vLevel );

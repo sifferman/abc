@@ -227,6 +227,7 @@ extern void            Pdr_ManVerifyInvariant( Pdr_Man_t * p );
 extern Vec_Int_t *     Pdr_ManDeriveInfinityClauses( Pdr_Man_t * p, int fReduce );
 /*=== pdrMan.c ==========================================================*/
 extern Pdr_Man_t *     Pdr_ManStart( Aig_Man_t * pAig, Pdr_Par_t * pPars, Vec_Int_t * vPrioInit );
+extern void            Pdr_ManStopGipSolvers( Pdr_Man_t * p );
 extern void            Pdr_ManStop( Pdr_Man_t * p );
 extern Abc_Cex_t *     Pdr_ManDeriveCex( Pdr_Man_t * p );
 extern Abc_Cex_t *     Pdr_ManDeriveCexAbs( Pdr_Man_t * p );
